@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
-
+float descontoInss (float salBruto);
 
 int main(int argc, char *argv[]) {
 	
 	setlocale(LC_ALL, "Portuguese");
-	float salarioBruto, valorVT, valorS, valorVR;
+	float salarioBruto, valorVT, valorS, valorVR, valorPlanoSau;
 	int VT, SDCT, continuo, planoSaude;
 	
 	
@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 		printf(" =============================================================================\n\n");
 		
 		printf("============================================================================\n\n");
-		printf ("==> Insira o sal·rio bruto do funcionario: R$ ");
+		printf ("==> Insira o sal√°rio bruto do funcionario: R$ ");
 		scanf ("%f", &salarioBruto);
 		if (salarioBruto < 0) {
 			printf("VALOR INVALIDO");
@@ -28,41 +28,52 @@ int main(int argc, char *argv[]) {
 		}
 		fflush(stdin);
 		
-		printf ("\n==> O funcion·rio possui vale transporte: ");
-		printf ("	[1]- Sim     [2]- N„o\n");
+		float salario = salarioBruto - descontoInss(salarioBruto);
+		
+		printf ("\n==> O funcion√°rio possui vale transporte: ");
+		printf ("	[1]- Sim     [2]- N√£o\n");
 		scanf ("%d", &VT);
 		fflush(stdin);
 		
 		if (VT == 1) {
 			printf ("* Qual o valor do vale transporte: R$ ");
-			scanf ("%f", &valorVT);
-		} else if ( valorVT != 1 && valorVT != 2 ) {
-			printf("VALOR INV¡LIDO");
+			scanf ("%f \n", &valorVT);
+		} else if ( VT != 1 && VT != 2 ) {
+			printf("VALOR INV√ÅLIDO");
 			break;
 		}
 		
-		printf ("\n==> O funcion·rio tem convÍnio com o sindicato: ");
-		printf ("[1]- Sim     [2]- N„o\n");
+		printf ("\n==> O funcion√°rio tem conv√™nio com o sindicato: ");
+		printf ("[1]- Sim     [2]- N√£o\n");
 		scanf ("%d", &SDCT);
+		printf("\n");
 		if (SDCT == 1) {
 			printf ("* Qual o valor do sindicato: R$ ");
 			scanf ("%f", &valorS);
 			fflush(stdin);
+		} else if ( SDCT != 1 && SDCT != 2 ) {
+			printf("VALOR INV√ÅLIDO");
+			break;
 		}
 		
-		printf("==> Plano de s·ude do funcion·rio: [1]- Pago pela empresa  [2]- Co-participativo");
+		printf("==> Plano de s√°ude do funcion√°rio: [1]- Pago pela empresa  [2]- Co-participativo");
 		scanf("%d", &planoSaude);
 		fflush(stdin);
 		if (planoSaude == 2) {
-			printf("* Digite o valor a ser descontado da folha de pagamento referente ao plano co-participativo");
+			printf("* Digite o valor a ser descontado referente ao plano co-participativo: R$ ");
+			scanf("%d", &valorPlanoSau);
+			printf ("\n");
+		} else if ( planoSaude != 1 && planoSaude != 2 ) {
+			printf("VALOR INV√ÅLIDO");
+			break;
 		}
 		
-		printf ("\n==> Qual o valor descontado do vale refeiÁ„o: R$ ");
+		printf ("==> Qual o valor descontado do vale refei√ß√£o: R$ ");
 		scanf ("%d", &valorVR);
 		fflush (stdin);
 		
-		printf ("\n==> VocÍ deseja calcular a folha de pagamento de mais algum funcion·rio?\n");
-		printf ("\n[1]- Sim \n[2]- N„o\n");
+		printf ("\n==> Voc√™ deseja calcular a folha de pagamento de mais algum funcion√°rio?\n");
+		printf ("\n[1]- Sim \n[2]- N√£o\n");
 		scanf ("%d", &continuo);
 		
 		if ( continuo == 1) {
@@ -77,10 +88,12 @@ int main(int argc, char *argv[]) {
 
 
 
-float descontoInss (float INSS) {
-	
-	
-	
+float descontoInss (float salarioBruto) {
+	float INSS;
+	if (salarioBruto < 1693.72) {
+		INSS = (salarioBruto * 8) / 100;
+	}
+	return INSS;
 }
 
 float descontoIr (float IR) {
