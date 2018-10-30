@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <locale.h>
 float descontoInss (float salBruto);
+float descontoFgts (float FGTS);
 
 int main(int argc, char *argv[]) {
 	
@@ -29,6 +30,10 @@ int main(int argc, char *argv[]) {
 		fflush(stdin);
 		
 		float salario = salarioBruto - descontoInss(salarioBruto);
+		printf ("%f\n", salario);
+		salario = salario - descontoFgts (salarioBruto);
+		printf ("%f\n", salario);
+		
 		
 		printf ("\n==> O funcionário possui vale transporte: ");
 		printf ("	[1]- Sim     [2]- Não\n");
@@ -92,6 +97,10 @@ float descontoInss (float salarioBruto) {
 	float INSS;
 	if (salarioBruto < 1693.72) {
 		INSS = (salarioBruto * 8) / 100;
+	} else if (salarioBruto > 1693.72 && salarioBruto < 2822.90) {
+		INSS = (salarioBruto * 9) / 100;		
+	} else {
+		INSS = (salarioBruto * 11) / 100;
 	}
 	return INSS;
 }
@@ -100,12 +109,13 @@ float descontoIr (float IR) {
 	
 	
 	
+	
 }
 
-float descontoFgts (float FGTS) {
-	
-	
-	
+float descontoFgts (float salarioBruto) {
+	float FGTS;
+	FGTS = (salarioBruto * 8) / 100;
+	return FGTS;
 }
 
 float descontoTransporte (float TRANSPORTE) {
@@ -113,16 +123,3 @@ float descontoTransporte (float TRANSPORTE) {
 	
 	
 } 
-
-float descontoSindicato (float SINDICATO) {
-	
-	
-	
-}
-
-
-float descontoRefeicao (float REFEICAO) {
-	
-	
-	
-}
